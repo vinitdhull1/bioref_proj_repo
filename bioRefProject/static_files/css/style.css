@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-custom {
+    background-color: #052F41;;
+}
+
+#login_page {
+    background-color: #C4D1D1;
+}
