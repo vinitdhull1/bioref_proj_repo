@@ -4,5 +4,9 @@
 }
 
 .navbar-custom {
-    background: linear-gradient(to right, #360033, #0b8793);;
+    background-color: #052F41;
+}
+
+#login_page {
+    background-color: #052F41;
 }

@@ -19,7 +19,7 @@
     <script>
         function show_processing() {
             document.getElementById('submit_btn_load').style.display = "";
-            var x = document.getElementById("MsgBox");
+            var x = document.getElementById("output_text_area");
             if (x.style.display === "block") {
                 x.style.display = "none";
             }
@@ -72,12 +72,24 @@
         </div>
     </nav>
     <!---------------END NAVBAR--------------------------->
-    <div class="container border border-dark mt-5">
-        <h3 class="text-center m-0 p-3">AUTO-BIOREF CORRECTOR</h1>
+    <div class="container border border-dark mt-5 p-0">
+            <h3 class="text-center m-0 border-bottom border-dark p-3">AUTO-BIOREF CORRECTOR</h1>    
             <div class="row">
+                {% if messages %}
+            {% for message in messages %}
+            <div class="container ps-3 pe-3 pt-3  text-center" id="MsgBox">
+                <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
                 <div class="col-6">
-                    <form action="{% url 'index' %}" method="post" class="mb-3 p-3" enctype="multipart/form-data">
+                    <h6 class="ps-3 pt-3 text-center">INPUT</h6>
+                    <form action="{% url 'index' %}" method="post" class="mb-3 p-2" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input type="hidden" name="form_type" value="formOne">
                         <div class="mb-3">
                             <textarea class="form-control border border-dark" name="para" id="exampleFormControlTextarea1" rows="10" placeholder="Enter text here" >{{ data }}</textarea>
                         </div>
@@ -85,17 +97,25 @@
                     </form>
                 </div>
                 <div class="col-6 mb-3 p-3">
-                    {% if item != "none" %}
-                    <div class="mb-3">
-                        <textarea class="form-control border border-dark" id="exampleFormControlTextarea1" rows="10">{{ item }}</textarea>
+                    <h6 class="ps-3 text-center">OUTPUT</h6>
+                    <div class="text-center">
+                        <div class="spinner-border" role="status" id="submit_btn_load" style="display:none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
-                    {% endif %}
-                    <div class="spinner-border" role="status" id="submit_btn_load" style="display:none;">
-                        <span class="sr-only">Loading...</span>
-                    </div>
+                    <form type="hidden" class="mb-3 p-2" action="{% url 'index' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" style="display: none;" name="form_type" value="formTwo" />
+                        {% if item != "none" %}
+                        <div class="mb-3">
+                            <textarea type="hidden" style="display: none;" class="form-control border border-dark" name="input_text" id="input_text_area_two">{{ data }}</textarea>
+                            <textarea  class="form-control border border-dark" name="output_text" id="output_text_area" rows="10">{{ item }}</textarea>
+                        </div>
+                        <button type="submit" class="btn text-light" style="background-color: #052F41;">Save</button>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
-            
     </div>
 
     <!-- Optional JavaScript -->
