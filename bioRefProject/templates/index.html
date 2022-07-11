@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.1.0/tinymce.min.js" integrity="sha512-dr3qAVHfaeyZQPiuN6yce1YuH7YGjtUXRFpYK8OfQgky36SUfTfN3+SFGoq5hv4hRXoXxAspdHw4ITsSG+Ud/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -19,14 +20,134 @@
     <script>
         function show_processing() {
             document.getElementById('submit_btn_load').style.display = "";
-            var x = document.getElementById("output_text_area");
+            var x = document.getElementById('output_text_area');
+            var save_btn = document.getElementById('save_btn');
+            var Msg_box = document.getElementById('MsgBox');
             if (x.style.display === "block") {
                 x.style.display = "none";
+                save_btn.style.display = "none";
             }
             else {
                 x.style.display = "none";
+                save_btn.style.display = "none";
             }
-        }
+        }  
+        // EDITOR FOR INPUT FIELD
+        tinymce.init({
+            selector: 'textarea#exampleFormControlTextarea1',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: "30s",
+            autosave_prefix: "{path}{query}-{id}-",
+            autosave_restore_when_empty: false,
+            autosave_retention: "2m",
+            image_advtab: true,
+            /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
+            link_list: [
+                { title: 'My page 1', value: 'https://www.codexworld.com' },
+                { title: 'My page 2', value: 'https://www.xwebtools.com' }
+            ],
+            image_list: [
+                { title: 'My page 1', value: 'https://www.codexworld.com' },
+                { title: 'My page 2', value: 'https://www.xwebtools.com' }
+            ],
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Some class', value: 'class-name' }
+            ],
+            importcss_append: true,
+            file_picker_callback: function (callback, value, meta) {
+                /* Provide file and text for the link dialog */
+                if (meta.filetype === 'file') {
+                    callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+                }
+            
+                /* Provide image and alt text for the image dialog */
+                if (meta.filetype === 'image') {
+                    callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+                }
+            
+                /* Provide alternative source and posted for the media dialog */
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+                }
+            },
+            templates: [
+                { title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>' },
+                { title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...' },
+                { title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>' }
+            ],
+            template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+            height: 350,
+            image_caption: true,
+            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+            noneditable_noneditable_class: "mceNonEditable",
+            toolbar_mode: 'sliding',
+            contextmenu: "link image imagetools table",
+        });
+        //EDITOR FOR OUTPUT TEXT FIELD
+        tinymce.init({
+            selector: 'textarea#output_text_area',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: "30s",
+            autosave_prefix: "{path}{query}-{id}-",
+            autosave_restore_when_empty: false,
+            autosave_retention: "2m",
+            image_advtab: true,
+            /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
+            link_list: [
+                { title: 'My page 1', value: 'https://www.codexworld.com' },
+                { title: 'My page 2', value: 'https://www.xwebtools.com' }
+            ],
+            image_list: [
+                { title: 'My page 1', value: 'https://www.codexworld.com' },
+                { title: 'My page 2', value: 'https://www.xwebtools.com' }
+            ],
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Some class', value: 'class-name' }
+            ],
+            importcss_append: true,
+            file_picker_callback: function (callback, value, meta) {
+                /* Provide file and text for the link dialog */
+                if (meta.filetype === 'file') {
+                    callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+                }
+            
+                /* Provide image and alt text for the image dialog */
+                if (meta.filetype === 'image') {
+                    callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+                }
+            
+                /* Provide alternative source and posted for the media dialog */
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+                }
+            },
+            templates: [
+                { title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>' },
+                { title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...' },
+                { title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>' }
+            ],
+            template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+            height: 350,
+            image_caption: true,
+            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+            noneditable_noneditable_class: "mceNonEditable",
+            toolbar_mode: 'sliding',
+            contextmenu: "link image imagetools table",
+        });
     </script>
 </head>
 
@@ -72,8 +193,8 @@
         </div>
     </nav>
     <!---------------END NAVBAR--------------------------->
-    <div class="container border border-dark mt-5 p-0">
-            <h3 class="text-center m-0 border-bottom border-dark p-3">AUTO-BIOREF CORRECTOR</h1>    
+    <div class="container border border-dark mt-3 p-0">
+            <h4 class="text-center m-0 border-bottom border-dark p-2">AUTO-BIOREF CORRECTOR</h4>    
             <div class="row">
                 {% if messages %}
             {% for message in messages %}
@@ -91,7 +212,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="form_type" value="formOne">
                         <div class="mb-3">
-                            <textarea class="form-control border border-dark" name="para" id="exampleFormControlTextarea1" rows="10" placeholder="Enter text here" >{{ data }}</textarea>
+                            <textarea class="form-control border border-dark" name="para" id="exampleFormControlTextarea1" placeholder="Enter text here" >{{ data }}</textarea>
                         </div>
                         <button type="submit" class="btn text-light" style="background-color: #052F41;" onclick="show_processing()">Submit</button>
                     </form>
@@ -108,10 +229,10 @@
                         <input type="hidden" style="display: none;" name="form_type" value="formTwo" />
                         {% if item != "none" %}
                         <div class="mb-3">
-                            <textarea type="hidden" style="display: none;" class="form-control border border-dark" name="input_text" id="input_text_area_two">{{ data }}</textarea>
-                            <textarea  class="form-control border border-dark" name="output_text" id="output_text_area" rows="10">{{ item }}</textarea>
+                            <textarea type="hidden" style="display: none;" class="form-control border border-dark" name="input_text" id="input_text_area_two">{{ data|safe }}</textarea>
+                            <textarea  class="form-control border border-dark" name="output_text" id="output_text_area">{{ item|safe }}</textarea>
                         </div>
-                        <button type="submit" class="btn text-light" style="background-color: #052F41;">Save</button>
+                        <button type="submit" class="btn text-light" id="save_btn" style="background-color: #052F41;">Save</button>
                         {% endif %}
                     </form>
                 </div>
@@ -120,6 +241,7 @@
 
     <!-- Optional JavaScript -->
     <script src="{% static 'js/main.js' %}"></script>
+    
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
