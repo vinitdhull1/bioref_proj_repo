@@ -198,7 +198,7 @@ def biorefOutput(text):
 
     if matches:
         match = matches[0]
-        span = match.spans()
+        span = match.span()
         value = match.group()
 
         if model_output[0:span[0]-1] == text[0:span[0]-1]:
